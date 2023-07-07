@@ -24,7 +24,7 @@ runs:
       with:
         node-version: ${{ inputs.node-version || '' }}
         node-version-file: ${{ inputs.node-version-file || '' }}
-        cache: "yarn"
+        cache: 'yarn'
 
     # Caches node_modules, breaks cache when yarn.lock is updated
     - name: Cache dependencies
@@ -33,9 +33,10 @@ runs:
       with:
         path: |
           ./node_modules
-        key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+        key: install-${{ hashFiles('**/.env','**/*lock*') }}
 
-    # Installs dependencies from the cached packages in the global yarn cache if the cache was broken
+    # Installs dependencies from the cached packages
+    # in the global yarn cache if the cache was broken
     - name: Install dependencies
       if: steps.dependency-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile --prefer-offline
