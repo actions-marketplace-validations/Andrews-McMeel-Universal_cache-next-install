@@ -33,10 +33,10 @@ runs:
       with:
         path: |
           ./node_modules
-        key: ${{ runner.os }}-modules-${{ hashFiles("yarn.lock") }}
+        key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
 
     # Installs dependencies from the cached packages in the global yarn cache if the cache was broken
     - name: Install dependencies
-      if: steps.dependency-cache.outputs.cache-hit != "true"
+      if: steps.dependency-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile --prefer-offline
       shell: bash
