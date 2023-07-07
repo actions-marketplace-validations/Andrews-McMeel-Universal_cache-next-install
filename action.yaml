@@ -11,6 +11,10 @@ inputs:
     description: "Node version to use"
     required: true
     default: "16.14.0"
+  node-version-file:
+    description: "Node version file to use"
+    required: true
+    default: ".nvmrc"
 
 runs:
   using: "composite"
@@ -19,7 +23,8 @@ runs:
     - name: Set up Node
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version: ${{ inputs.node-version || '' }}
+        node-version-file: ${{ inputs.node-version-file || '' }}
         cache: "yarn"
 
     # Caches node_modules, breaks cache when yarn.lock is updated
