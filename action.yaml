@@ -9,11 +9,10 @@ branding:
 inputs:
   node-version:
     description: "Node version to use"
-    required: true
-    default: "16.14.0"
+    required: false
   node-version-file:
     description: "Node version file to use"
-    required: true
+    required: false
     default: ".nvmrc"
 
 runs:
