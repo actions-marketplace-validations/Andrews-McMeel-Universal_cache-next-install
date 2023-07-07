@@ -1,12 +1,38 @@
-name: Default GitHub Action
+name: Cache Node Install
 
-description: Default GitHub Action that outputs "Hello World"
+description: Installs Node dependencies and caches the result
 
 branding:
-  color: purple
-  icon: unlock
+  color: yellow
+  icon: download
+
+inputs:
+  node-version:
+    description: "Node version to use"
+    required: true
+    default: "16.14.0"
+
 runs:
   using: "composite"
   steps:
-    - run: echo "Hello World" >> $GITHUB_OUTPUT
+    # Installs node and caches the global yarn cache (does not cache node_modules)
+    - name: Set up Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: "yarn"
+
+    # Caches node_modules, breaks cache when yarn.lock is updated
+    - name: Cache dependencies
+      id: dependency-cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ./node_modules
+        key: ${{ runner.os }}-modules-${{ hashFiles("yarn.lock") }}
+
+    # Installs dependencies from the cached packages in the global yarn cache if the cache was broken
+    - name: Install dependencies
+      if: steps.dependency-cache.outputs.cache-hit != "true"
+      run: yarn install --frozen-lockfile --prefer-offline
       shell: bash
