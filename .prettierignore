@@ -1,12 +1,11 @@
 # General
 .cache/
 .git/
-
+.vscode/
+.idea/
 
 # GitHub Actions Workflows
-.github/dependabot.yml
-.github/labeler.yml
-.github/workflows/aks*.yml
+.github/
 
 # Helm
 deployments/**/templates/
@@ -23,21 +22,28 @@ playwright-report/
 test-results/
 **.js.map
 **.bundle.js
-storybook-static
+storybook-static/
 src/helpers/utilities/tokens/_design_tokens.js
+*.tsbuildinfo
+**/vendor
+/tests/
+**/.test.
+# Project Specific Ignores
+src/design-system-package/dist/**
 
 # WordPress
 wp-content/
 
 # Games
-*Game/
+/*Game/
 
 # Dotnet
-*Service/
-*.Library/
-*.Tests/
-*.WebAPI/
-*.sln
-*.csproj
-*.lutconfig
-.editorconfig
+/*Service/
+/*.Library/
+/*.Tests/
+/*.WebAPI/
+**/*.sln
+**/*.csproj
+**/*.cs
+/*.lutconfig
+/.editorconfig
